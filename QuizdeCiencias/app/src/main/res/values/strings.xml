@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Quiz de Ciências</string>
+    <string name="quiz_de_ciencias">Quiz de Ciências</string>
+    <string name="qu_mica">Química</string>
+    <string name="f_sica">Física</string>
+    <string name="biologia">Biologia</string>
 </resources>
