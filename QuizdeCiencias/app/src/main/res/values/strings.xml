@@ -4,4 +4,12 @@
     <string name="qu_mica">Química</string>
     <string name="f_sica">Física</string>
     <string name="biologia">Biologia</string>
+    <string name="title_activity_tela_fisica">TelaFisica</string>
+    <string name="todo">TODO</string>
+    <string name="b">B</string>
+    <string name="c">C</string>
+    <string name="avan_ar">AVANÇAR</string>
+    <string name="d">D</string>
+    <string name="a">A</string>
+    <string name="enunciado">1) No GLP (Gás de Cozinha) há uma subtância essencial para detectar vazamento de gás, através de seu odor caracterísicto. O gás em questão é:</string>
 </resources>
