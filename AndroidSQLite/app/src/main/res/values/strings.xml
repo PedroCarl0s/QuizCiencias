@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Banco de Dados SQLite</string>
+    <string name="txt">TextView</string>
+</resources>
