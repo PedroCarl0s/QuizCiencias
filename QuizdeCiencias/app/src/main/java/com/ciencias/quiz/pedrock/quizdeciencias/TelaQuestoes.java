@@ -19,18 +19,7 @@ public class TelaQuestoes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_questoes);
 
-        String[] letras =  {"Hélio", "Mercaptano", "Metano", "Enxofre"};
-        letras[0] = "letraA";
-        Questao q1 = new Questao("teste", letras);
-
-
-        enunciado = q1.getEnunciado();
-        letraA = q1.getLetraA();
-        letraB = q1.getLetraB();
-        letraC = q1.getLetraC();
-        letraD = q1.getLetraD();
-
-
+        // Obtendo a disciplina escolhida anteriormente
         Bundle dados = getIntent().getExtras();
         String nome = dados.getString("titulo");
 
