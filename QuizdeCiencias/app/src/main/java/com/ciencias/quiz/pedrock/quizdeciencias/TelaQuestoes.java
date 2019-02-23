@@ -3,17 +3,14 @@ package com.ciencias.quiz.pedrock.quizdeciencias;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ciencias.quiz.pedrock.quizdeciencias.helper.DbHelper;
 
@@ -25,7 +22,7 @@ public class TelaQuestoes extends AppCompatActivity {
 
     private Cursor cursor;
     private TextView questao;
-    private boolean respondeu;
+    private boolean respondeu = false;
 
     private RadioGroup rgLetras;
     private RadioButton letraA;
@@ -38,6 +35,13 @@ public class TelaQuestoes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_questoes);
+
+        this.questao = (TextView) findViewById(R.id.lblEnunciado);
+        this.rgLetras = (RadioGroup) findViewById(R.id.rgLetras);
+        this.letraA = (RadioButton) findViewById(R.id.letraA);
+        this.letraB = (RadioButton) findViewById(R.id.letraB);
+        this.letraC = (RadioButton) findViewById(R.id.letraC);
+        this.letraD = (RadioButton) findViewById(R.id.letraD);
 
         // Obtendo a disciplina escolhida anteriormente
         Bundle dados = getIntent().getExtras();
@@ -76,12 +80,6 @@ public class TelaQuestoes extends AppCompatActivity {
         this.cursor = banco.rawQuery(sql, null);
         this.cursor.moveToFirst();
 
-        this.questao = (TextView) findViewById(R.id.lblEnunciado);
-        this.letraA = (RadioButton) findViewById(R.id.letraA);
-        this.letraB = (RadioButton) findViewById(R.id.letraB);
-        this.letraC = (RadioButton) findViewById(R.id.letraC);
-        this.letraD = (RadioButton) findViewById(R.id.letraD);
-        this.rgLetras = (RadioGroup) findViewById(R.id.rgLetras);
 
         // Modifica o enunciado e alternativas da questão
         alterarTexto(this.cursor);
@@ -125,36 +123,31 @@ public class TelaQuestoes extends AppCompatActivity {
 
 
     private List<String> respostasUsuario = new ArrayList<String>();
-    public boolean verificaRadioButton() {
+    
+    public boolean verificaResposta() {
 
-        this.rgLetras.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+        int checkedId = this.rgLetras.getCheckedRadioButtonId();
 
-                if (checkedId == R.id.letraA) {
-                    respostasUsuario.add("a");
-                    respondeu = true;
+        if (checkedId == R.id.letraA) {
+            respostasUsuario.add("a");
+            respondeu = true;
 
-                } else if (checkedId == R.id.letraB) {
-                    respostasUsuario.add("b");
-                    respondeu = true;
+        } else if (checkedId == R.id.letraB) {
+            respostasUsuario.add("b");
+            respondeu = true;
 
-                } else if (checkedId == R.id.letraC) {
-                    respostasUsuario.add("c");
-                    respondeu = true;
+        } else if (checkedId == R.id.letraC) {
+            respostasUsuario.add("c");
+            respondeu = true;
 
-                } else if (checkedId == R.id.letraD) {
-                    respostasUsuario.add("d");
-                    respondeu = true;
+        } else if (checkedId == R.id.letraD) {
+            respostasUsuario.add("d");
+            respondeu = true;
 
-                } else {
-                    respondeu = false;
-                }
+        } else {
+            respondeu = false;
+        }
 
-
-
-            }
-        });
         return respondeu;
 
     }
@@ -162,8 +155,8 @@ public class TelaQuestoes extends AppCompatActivity {
 
     public void avancarQuestao(View view) {
 
-        if (verificaRadioButton()) {
 
+        if (verificaResposta()) {
 
             if (!this.cursor.isAfterLast()) {
                 this.rgLetras.clearCheck();
@@ -178,6 +171,7 @@ public class TelaQuestoes extends AppCompatActivity {
             dialog.setIcon(android.R.drawable.ic_dialog_alert);
             dialog.setCancelable(false);
 
+
             dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -187,6 +181,7 @@ public class TelaQuestoes extends AppCompatActivity {
 
             dialog.create();
             dialog.show();
+
         }
 
     }
@@ -200,6 +195,7 @@ public class TelaQuestoes extends AppCompatActivity {
         else if (titulo.equalsIgnoreCase("Biologias")) return imgID[2];
         else throw new Exception("Erro: título inválido!");
     }
+
 
 
     private void alterarTexto(Cursor cursor) {
