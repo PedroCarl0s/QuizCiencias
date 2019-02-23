@@ -164,9 +164,9 @@ public class TelaQuestoes extends AppCompatActivity {
 
         if (verificaRadioButton()) {
 
-            this.rgLetras.clearCheck();
 
             if (!this.cursor.isAfterLast()) {
+                this.rgLetras.clearCheck();
                 alterarTexto(this.cursor);
             }
 
