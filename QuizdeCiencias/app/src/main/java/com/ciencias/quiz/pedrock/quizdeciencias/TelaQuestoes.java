@@ -2,25 +2,31 @@ package com.ciencias.quiz.pedrock.quizdeciencias;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.ciencias.quiz.pedrock.quizdeciencias.helper.DbHelper;
 
+
 public class TelaQuestoes extends AppCompatActivity {
 
 
-    private TextView titulo;
-    private ImageView imgTitulo;
-    private Button btnProxima;
+    private Cursor cursor;
+    private TextView questao;
 
-    private String enunciado;
-    private String letraA, letraB, letraC, letraD;
+    private RadioButton letraA;
+    private RadioButton letraB;
+    private RadioButton letraC;
+    private RadioButton letraD;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,44 +37,56 @@ public class TelaQuestoes extends AppCompatActivity {
         Bundle dados = getIntent().getExtras();
         String nome = dados.getString("titulo");
 
-        imgTitulo = (ImageView) findViewById(R.id.imgTitulo);
-
 
         // Tenta alterar a imageView para a disciplina do parâmetro
         try {
             int imagem = getImagem(nome);
 
+            ImageView imgTitulo = (ImageView) findViewById(R.id.imgTitulo);
             imgTitulo.setImageResource(imagem);
 
         } catch (Exception error) {
             error.getMessage();
         }
 
-        // Recebe o textView da Activity e altera
-        titulo = findViewById(R.id.lblTitulo);
+        // Altera o texto do textView
+        TextView titulo = (TextView) findViewById(R.id.lblTitulo);
         titulo.setText(nome);
 
 
-
+        // Testa o nome da matéria escolhida, para usar uma CONSTANTE
         String nomeTabela = "";
         if (nome.equalsIgnoreCase("Química")) nomeTabela = DbHelper.TABLE_QUIMICA;
         else if (nome.equalsIgnoreCase("Física")) nomeTabela = DbHelper.TABLE_FISICA;
         else nomeTabela = DbHelper.TABLE_BIOLOGIA;
 
+        // Cria um objeto para poder ler o banco criado
         DbHelper db = new DbHelper(getApplicationContext());
 
+        // Realiza a pesquisa
         String sql = "SELECT * FROM " + nomeTabela + " ;";
         SQLiteDatabase banco = db.getReadableDatabase();
 
-        Cursor cursor = banco.rawQuery(sql, null);
+        this.cursor = banco.rawQuery(sql, null);
+        this.cursor.moveToFirst();
 
-        //btnProxima = (Button) findViewById(R.id.btnAvancar);
+        this.questao = (TextView) findViewById(R.id.lblEnunciado);
+        this.letraA = (RadioButton) findViewById(R.id.letraA);
+        this.letraB = (RadioButton) findViewById(R.id.letraB);
+        this.letraC = (RadioButton) findViewById(R.id.letraC);
+        this.letraD = (RadioButton) findViewById(R.id.letraD);
 
-        cursor.moveToFirst();
+        // Modifica o enunciado e alternativas da questão
+        alterarTexto(this.cursor);
 
-        TextView questao = (TextView) findViewById(R.id.lblEnunciado);
-        questao.setText(cursor.getString(0) + ") " + cursor.getString(1));
+    }
 
+
+    public void avancarQuestao(View view) {
+
+        if (!this.cursor.isAfterLast()) {
+            alterarTexto(this.cursor);
+        }
     }
 
 
@@ -82,5 +100,15 @@ public class TelaQuestoes extends AppCompatActivity {
     }
 
 
+    private void alterarTexto(Cursor cursor) {
+
+            this.questao.setText(cursor.getString(0) + ") " + cursor.getString(1));
+            this.letraA.setText(cursor.getString(2));
+            this.letraB.setText(cursor.getString(3));
+            this.letraC.setText(cursor.getString(4));
+            this.letraD.setText(cursor.getString(5));
+
+            this.cursor.moveToNext();
+    }
 
 }
