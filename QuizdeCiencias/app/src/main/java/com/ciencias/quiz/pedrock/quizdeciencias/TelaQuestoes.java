@@ -11,17 +11,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciencias.quiz.pedrock.quizdeciencias.helper.DbHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TelaQuestoes extends AppCompatActivity {
 
     private Cursor cursor;
     private TextView questao;
+    private boolean respondeu;
 
+    private RadioGroup rgLetras;
     private RadioButton letraA;
     private RadioButton letraB;
     private RadioButton letraC;
@@ -75,6 +81,7 @@ public class TelaQuestoes extends AppCompatActivity {
         this.letraB = (RadioButton) findViewById(R.id.letraB);
         this.letraC = (RadioButton) findViewById(R.id.letraC);
         this.letraD = (RadioButton) findViewById(R.id.letraD);
+        this.rgLetras = (RadioGroup) findViewById(R.id.rgLetras);
 
         // Modifica o enunciado e alternativas da questão
         alterarTexto(this.cursor);
@@ -116,11 +123,72 @@ public class TelaQuestoes extends AppCompatActivity {
         alert.show();
     }
 
+
+    private List<String> respostasUsuario = new ArrayList<String>();
+    public boolean verificaRadioButton() {
+
+        this.rgLetras.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (checkedId == R.id.letraA) {
+                    respostasUsuario.add("a");
+                    respondeu = true;
+
+                } else if (checkedId == R.id.letraB) {
+                    respostasUsuario.add("b");
+                    respondeu = true;
+
+                } else if (checkedId == R.id.letraC) {
+                    respostasUsuario.add("c");
+                    respondeu = true;
+
+                } else if (checkedId == R.id.letraD) {
+                    respostasUsuario.add("d");
+                    respondeu = true;
+
+                } else {
+                    respondeu = false;
+                }
+
+
+
+            }
+        });
+        return respondeu;
+
+    }
+
+
     public void avancarQuestao(View view) {
 
-        if (!this.cursor.isAfterLast()) {
-            alterarTexto(this.cursor);
+        if (verificaRadioButton()) {
+
+            this.rgLetras.clearCheck();
+
+            if (!this.cursor.isAfterLast()) {
+                alterarTexto(this.cursor);
+            }
+
+        } else {
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Resposta Vazia");
+            dialog.setMessage("Você não pode deixar em branco!");
+            dialog.setIcon(android.R.drawable.ic_dialog_alert);
+            dialog.setCancelable(false);
+
+            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            dialog.create();
+            dialog.show();
         }
+
     }
 
 
