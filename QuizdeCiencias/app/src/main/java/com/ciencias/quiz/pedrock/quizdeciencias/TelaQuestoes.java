@@ -1,6 +1,7 @@
 package com.ciencias.quiz.pedrock.quizdeciencias;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import com.ciencias.quiz.pedrock.quizdeciencias.helper.DbHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class TelaQuestoes extends AppCompatActivity {
@@ -30,6 +30,8 @@ public class TelaQuestoes extends AppCompatActivity {
     private RadioButton letraC;
     private RadioButton letraD;
 
+    private String sql;
+    private String nomeTabela;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class TelaQuestoes extends AppCompatActivity {
 
 
         // Testa o nome da matéria escolhida, para usar uma CONSTANTE
-        String nomeTabela = "";
+
         if (nome.equalsIgnoreCase("Química")) nomeTabela = DbHelper.TABLE_QUIMICA;
         else if (nome.equalsIgnoreCase("Física")) nomeTabela = DbHelper.TABLE_FISICA;
         else nomeTabela = DbHelper.TABLE_BIOLOGIA;
@@ -74,7 +76,7 @@ public class TelaQuestoes extends AppCompatActivity {
         DbHelper db = new DbHelper(getApplicationContext());
 
         // Realiza a pesquisa
-        String sql = "SELECT * FROM " + nomeTabela + " ;";
+        this.sql = "SELECT * FROM " + nomeTabela + " ;";
         SQLiteDatabase banco = db.getReadableDatabase();
 
         this.cursor = banco.rawQuery(sql, null);
@@ -122,7 +124,7 @@ public class TelaQuestoes extends AppCompatActivity {
     }
 
 
-    private List<String> respostasUsuario = new ArrayList<String>();
+    private ArrayList<String> respostasUsuario = new ArrayList<String>();
     
     public boolean verificaResposta() {
 
@@ -161,6 +163,16 @@ public class TelaQuestoes extends AppCompatActivity {
             if (!this.cursor.isAfterLast()) {
                 this.rgLetras.clearCheck();
                 alterarTexto(this.cursor);
+
+            } else {
+
+                // Passando valores para a TelaResultados
+                Intent respostas = new Intent(TelaQuestoes.this, TelaResultado.class);
+                respostas.putStringArrayListExtra("assinaladas", respostasUsuario);
+                respostas.putExtra("consulta", this.sql);
+                respostas.putExtra("materia", this.nomeTabela);
+
+                startActivity(respostas);
             }
 
         } else {
