@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TelaQuestoes" />
+        <activity android:name=".TelaResultado"></activity>
     </application>
 
 </manifest>

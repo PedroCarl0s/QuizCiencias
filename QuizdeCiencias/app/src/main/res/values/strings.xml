@@ -12,4 +12,11 @@
     <string name="d">D</string>
     <string name="a">A</string>
     <string name="enunciado">1) No GLP (Gás de Cozinha) há uma subtância essencial para detectar vazamento de gás, através de seu odor caracterísicto. O gás em questão é:</string>
+    <string name="resultado">Resultado</string>
+    <string name="total_acertos">Total de Acertos:</string>
+    <string name="textview1">Textview</string>
+    <string name="textview2">Textview</string>
+    <string name="textview3">Textview</string>
+    <string name="textview4">Textview</string>
+    <string name="textview5">Textview</string>
 </resources>
