@@ -93,11 +93,11 @@ public class TelaQuestoes extends AppCompatActivity {
     public void onBackPressed() {
 
         // Cria Alerta
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
 
         // Nomeia as mensagens
         alert.setTitle("Você deseja sair ?");
-        alert.setMessage("Se vocẽ sair, seu progresso será perdido!");
+        alert.setMessage("Se você sair, seu progresso será perdido!");
 
         // Configura cancelamento
         alert.setCancelable(false);
@@ -177,7 +177,7 @@ public class TelaQuestoes extends AppCompatActivity {
 
         } else {
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
             dialog.setTitle("Resposta Vazia");
             dialog.setMessage("Você não pode deixar em branco!");
             dialog.setIcon(android.R.drawable.ic_dialog_alert);
