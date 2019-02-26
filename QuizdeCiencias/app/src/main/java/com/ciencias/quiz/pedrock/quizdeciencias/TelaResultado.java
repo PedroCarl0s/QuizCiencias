@@ -1,5 +1,6 @@
 package com.ciencias.quiz.pedrock.quizdeciencias;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class TelaResultado extends AppCompatActivity {
 
     private ListView listQuestoes;
     private SimpleAdapter simple;
+    private Intent abreMenu;
 
     ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
 
@@ -99,6 +101,14 @@ public class TelaResultado extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Fim do Quiz!", Toast.LENGTH_SHORT).show();
 
     }
+
+    @Override
+    public void onBackPressed() {
+       this.abreMenu = new Intent(TelaResultado.this, MainActivity.class);
+       startActivity(abreMenu);
+    }
+
+
 
 
 }
