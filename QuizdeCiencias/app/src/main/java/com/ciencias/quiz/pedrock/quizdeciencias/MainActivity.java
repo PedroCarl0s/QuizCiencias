@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 itQuimica.putExtra("titulo", "Química");
 
                 startActivity(itQuimica);
+                finish();
             }
 
         });
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 itFisica.putExtra("titulo", "Física");
 
                 startActivity(itFisica);
+                finish();
             }
         });
 
@@ -56,9 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 itBiologia.putExtra("titulo", "Biologia");
 
                 startActivity(itBiologia);
+                finish();
             }
 
         });
     }
+
 
 }

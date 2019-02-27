@@ -71,7 +71,10 @@ public class TelaResultado extends AppCompatActivity {
 
             }
 
-            if (respostasMarcadas.get(linha).equals(questoes[linha][6])) totalAcertos++;
+            if (respostasMarcadas.get(linha).equals(questoes[linha][6])) {
+                totalAcertos++;
+                respostasMarcadas.set(linha, "certa");
+            }
             cursor.moveToNext();
         }
 
@@ -83,6 +86,18 @@ public class TelaResultado extends AppCompatActivity {
             item.put("letraB", questoes[i][3]);
             item.put("letraC", questoes[i][4]);
             item.put("letraD", questoes[i][5]);
+            item.put("correta", "Resposta Correta: " + questoes[i][6].toUpperCase());
+
+            if (respostasMarcadas.get(i).equals("certa")) {
+                item.put("marcou_certa", "Você respondeu: " + questoes[i][6].toUpperCase());
+                item.put("marcou_errada", "");
+
+            } else {
+                item.put("marcou_certa", "");
+                item.put("marcou_errada", "Você respondeu: " + respostasMarcadas.get(i).toUpperCase());
+            }
+
+
             lista.add(item);
         }
 
@@ -90,8 +105,8 @@ public class TelaResultado extends AppCompatActivity {
         // Usar o Adaptador para linkar e visualizar os dados
         simple = new SimpleAdapter(getApplicationContext(), lista,
                 R.layout.multi_lines,
-                new String[] {"enunciado", "letraA", "letraB", "letraC", "letraD"},
-                new int[] {R.id.enunciado, R.id.A, R.id.B, R.id.C, R.id.D});
+                new String[] {"enunciado", "letraA", "letraB", "letraC", "letraD", "correta", "marcou_certa", "marcou_errada"},
+                new int[] {R.id.enunciado, R.id.A, R.id.B, R.id.C, R.id.D, R.id.correta, R.id.marcou_certa, R.id.marcou_errada});
 
         // Linkando o Adaptador para a lista
         ((ListView) findViewById(R.id.listView)).setAdapter(simple);
@@ -106,6 +121,7 @@ public class TelaResultado extends AppCompatActivity {
     public void onBackPressed() {
        this.abreMenu = new Intent(TelaResultado.this, MainActivity.class);
        startActivity(abreMenu);
+       finish();
     }
 
 

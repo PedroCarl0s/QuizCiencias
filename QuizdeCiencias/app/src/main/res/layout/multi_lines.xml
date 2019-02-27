@@ -63,6 +63,34 @@
         android:textSize="16sp" />
 
     <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+    <TextView
+        android:id="@+id/correta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/resposta"
+        android:textColor="#00FF31"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/marcou_certa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/marcada"
+        android:textColor="#00FF31"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/marcou_errada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/marcada"
+        android:textColor="#E81400"
+        android:textSize="18sp" />
+
+    <Space
         android:id="@+id/space"
         android:layout_width="match_parent"
         android:layout_height="36dp" />

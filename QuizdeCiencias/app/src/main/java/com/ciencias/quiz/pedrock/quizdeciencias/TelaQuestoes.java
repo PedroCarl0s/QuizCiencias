@@ -115,6 +115,7 @@ public class TelaQuestoes extends AppCompatActivity {
         alert.setNegativeButton("Sair", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         });
@@ -173,6 +174,7 @@ public class TelaQuestoes extends AppCompatActivity {
                 respostas.putExtra("materia", this.nomeTabela);
 
                 startActivity(respostas);
+                finish();
             }
 
         } else {
@@ -220,5 +222,7 @@ public class TelaQuestoes extends AppCompatActivity {
 
             this.cursor.moveToNext();
     }
+
+
 
 }

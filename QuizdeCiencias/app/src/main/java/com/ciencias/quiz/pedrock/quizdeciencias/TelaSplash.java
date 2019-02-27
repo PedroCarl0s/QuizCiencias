@@ -16,7 +16,7 @@ public class TelaSplash extends AppCompatActivity {
         setContentView(R.layout.activity_tela_splash);
 
         // Deixar em tela cheia
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
         new Handler().postDelayed(new Runnable() {
