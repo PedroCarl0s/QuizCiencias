@@ -107,7 +107,7 @@
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="51dp"
         android:layout_marginBottom="64dp"
         android:text="@string/biologia"
         android:textSize="36sp"
