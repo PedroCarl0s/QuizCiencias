@@ -206,7 +206,7 @@ public class TelaQuestoes extends AppCompatActivity {
 
         if (titulo.equalsIgnoreCase("Química")) return imgID[0];
         else if (titulo.equalsIgnoreCase("Física")) return imgID[1];
-        else if (titulo.equalsIgnoreCase("Biologias")) return imgID[2];
+        else if (titulo.equalsIgnoreCase("Biologia")) return imgID[2];
         else throw new Exception("Erro: título inválido!");
     }
 
